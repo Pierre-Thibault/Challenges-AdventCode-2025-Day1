@@ -11,7 +11,7 @@ class Direction(StrEnum):
     RIGHT = "R"
 
 
-direction_operation: dict[str, Callable[[int, int], int]] = {
+direction_operation: dict[Direction, Callable[[int, int], int]] = {
     Direction.LEFT: sub,
     Direction.RIGHT: add,
 }
@@ -36,9 +36,7 @@ def main() -> None:
             else:
                 zero_count += dial_position - click % 100 <= 0
         zero_count += click // 100
-        dial_position = direction_operation[instruction.direction](
-            dial_position, instruction.click
-        )
+        dial_position = direction_operation[direction](dial_position, click)
         dial_position %= 100
     print(f"zero_count = {zero_count}")
 
